@@ -276,7 +276,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: c64e0fe5c5b818b4caa57dbe73fba718, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f6edc14d68d467242bf5e2de64e33307, type: 2}
+      objectReference: {fileID: 2100000, guid: 0ca1849f257f25d4dbb5a87c2ef90657, type: 2}
     - target: {fileID: -7511558181221131132, guid: c64e0fe5c5b818b4caa57dbe73fba718, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 234813309}
   - component: {fileID: 234813311}
   - component: {fileID: 234813310}
+  - component: {fileID: 234813312}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -320,7 +321,7 @@ RectTransform:
   m_GameObject: {fileID: 234813308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803390140}
@@ -343,14 +344,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.29206395, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: abb424c087ec33b4c8cf2eb3d01fbc91, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -368,6 +369,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 234813308}
   m_CullTransparentMesh: 1
+--- !u!114 &234813312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234813308}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bda27e1f8d8fba4cb8606a767172e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairImage: {fileID: 234813310}
+  normalScale: 1
+  hitScaleMultiplier: 1.2
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &328706079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -416,6 +433,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7771269956943887402, guid: eba32488b0945284782f635422a29933, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
     - target: {fileID: 919132149155446097, guid: eba32488b0945284782f635422a29933, type: 3}
       propertyPath: m_Name
       value: Hangar_part_03
@@ -423,7 +444,11 @@ PrefabInstance:
     - target: {fileID: 8592461530254608894, guid: eba32488b0945284782f635422a29933, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e6b9b44320f4448d9d5e0ee634259966, type: 2}
+      objectReference: {fileID: 2100000, guid: b6c5e7562b16329419a22e6cb6d9a7a4, type: 2}
+    - target: {fileID: 8592461530254608894, guid: eba32488b0945284782f635422a29933, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0ca1849f257f25d4dbb5a87c2ef90657, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -774,10 +799,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1001572858800382356, guid: 8fdf8ee6372027f47ad9727f006fc763, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b6c5e7562b16329419a22e6cb6d9a7a4, type: 2}
+    - target: {fileID: -1001572858800382356, guid: 8fdf8ee6372027f47ad9727f006fc763, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0ca1849f257f25d4dbb5a87c2ef90657, type: 2}
     - target: {fileID: 919132149155446097, guid: 8fdf8ee6372027f47ad9727f006fc763, type: 3}
       propertyPath: m_Name
       value: Hangar_part_05
       objectReference: {fileID: 0}
+    - target: {fileID: 8910002132017449226, guid: 8fdf8ee6372027f47ad9727f006fc763, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1382,7 +1419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &949407404
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1492,12 +1529,12 @@ GameObject:
   - component: {fileID: 1114844705}
   - component: {fileID: 1114844704}
   m_Layer: 5
-  m_Name: Image
+  m_Name: SniperOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1114844703
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1815,7 +1852,7 @@ PrefabInstance:
     - target: {fileID: -6883275031989800674, guid: 2b88f6c715b28c14287c01b9536ada06, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: b6c5e7562b16329419a22e6cb6d9a7a4, type: 2}
+      objectReference: {fileID: 2100000, guid: 0ca1849f257f25d4dbb5a87c2ef90657, type: 2}
     - target: {fileID: -6883275031989800674, guid: 2b88f6c715b28c14287c01b9536ada06, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
@@ -1884,6 +1921,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -951177412417257579, guid: d08605b992248f948b207f9e2131d3cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
     - target: {fileID: 919132149155446097, guid: d08605b992248f948b207f9e2131d3cf, type: 3}
       propertyPath: m_Name
       value: Hangar_part_01
@@ -1895,7 +1936,7 @@ PrefabInstance:
     - target: {fileID: 5181081914544161686, guid: d08605b992248f948b207f9e2131d3cf, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: e6b9b44320f4448d9d5e0ee634259966, type: 2}
+      objectReference: {fileID: 2100000, guid: 0ca1849f257f25d4dbb5a87c2ef90657, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

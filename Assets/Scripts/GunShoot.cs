@@ -53,7 +53,12 @@ public class GunShoot : MonoBehaviour
     public float range = 100f;
     public float fireRate = 15f; // 15 bullets per second
     public Camera FPSCam;
-    private float nextTimeToFire = 0f;
+
+
+    // public CrosshairController CrosshairController; // Référence au script CrosshairController
+
+
+    private float nextTimeToFire = 1f;
 
     // Référence au Canvas contenant le script ScopeImageController
     public ScopeImageController ScopeImageController;
@@ -89,7 +94,8 @@ public class GunShoot : MonoBehaviour
                 ScopeImageController.ShowHitScope();
                 ScopeImageController.PlayScopeZoom();
 
-
+                // Appelle la méthode UpdateCrosshair() avec targetHit = true
+                // CrosshairController.UpdateCrosshair(true);
 
             }
             else
@@ -98,7 +104,8 @@ public class GunShoot : MonoBehaviour
                 ScopeImageController.ShowTryScope();
                 ScopeImageController.PlayScopeFade();
 
-
+                // Appelle la méthode UpdateCrosshair() avec targetHit = false
+                // CrosshairController.UpdateCrosshair(false);
             }
 
             // Applique une force à l'objet touché
