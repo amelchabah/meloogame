@@ -30,6 +30,7 @@ public class FPSController : MonoBehaviour
 
 
     public bool canMove = true; // Indique si le joueur peut bouger ou non
+    private bool isMoving = false; // Indique si le joueur est en mouvement
 
 
     CharacterController characterController; // Référence au composant CharacterController attaché à l'objet (du joueur)
@@ -48,9 +49,17 @@ public class FPSController : MonoBehaviour
     private float currentFOV; // Champ de vision actuel de la caméra
     public Image sniperOverlay; // Référence à l'Image de l'overlay du viseur de sniper
 
+    // Référence au gameobject du sniper (le gun)
+    public GameObject sniperGun;
+
+    public Animator animator; // Référence à l'animator du personnage
+
 
     // Vitesse de transition entre les valeurs de FOV
     public float zoomSpeed = 5f;
+    // Indique si le joueur est actuellement en mode sniper
+    private bool isSniperMode = false;
+
 
 
     void Start()
@@ -89,7 +98,9 @@ public class FPSController : MonoBehaviour
 
         // Modifie l'amplitude du balancement en fonction de la vitesse de déplacement
         bobbingAmount = isRunning ? 0.1f : 0.03f; // Définit l'amplitude du balancement en fonction de si le joueur court ou marche ou est accroupi
-        if (isCrouching)
+        // if (isCrouching or isSniperMode)
+
+        if (isCrouching || isSniperMode)
         {
             bobbingAmount = 0;
         }
@@ -187,10 +198,19 @@ public class FPSController : MonoBehaviour
         if (Input.GetMouseButton(1)) // Si le bouton droit de la souris est maintenu enfoncé
         {
             playerCamera.fieldOfView = sniperFOV; // Ajuste le champ de vision (FOV) pour le mode sniper
+                                                  // Activez le mode sniper
+            isSniperMode = true;
+            // Cachez le gameobject du sniper (le gun)
+            sniperGun.SetActive(false);
         }
         else // Si le bouton droit de la souris n'est pas enfoncé
         {
             playerCamera.fieldOfView = defaultFOV; // Rétablit le champ de vision (FOV) par défaut
+                                                   // Désactivez le mode sniper
+            isSniperMode = false;
+            // Affichez le gameobject du sniper (le gun)
+            sniperGun.SetActive(true);
+
         }
 
         // Détermine la valeur cible du champ de vision en fonction de si le bouton droit de la souris est maintenu enfoncé ou non
@@ -202,6 +222,24 @@ public class FPSController : MonoBehaviour
 
         // Activer ou désactiver l'overlay du viseur de sniper en fonction de l'état du mode sniperFOV
         sniperOverlay.gameObject.SetActive(Input.GetMouseButton(1));
+
+
+
+        // Vérifie si le joueur est en mouvement
+        isMoving = Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0;
+
+        // Active ou désactive l'animation en fonction du mouvement du joueur
+        if (isMoving)
+        {
+            // Active l'animation lorsque le joueur est en mouvement
+            animator.enabled = true;
+        }
+        else
+        {
+            // Désactive l'animation lorsque le joueur n'est pas en mouvement
+            animator.enabled = false;
+        }
+
     }
 
     // Fonction pour respawn le joueur à sa position initiale
