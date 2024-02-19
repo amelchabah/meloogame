@@ -7,6 +7,7 @@ public class ScopeImageController : MonoBehaviour
     public Image tryScopeImage; // Référence à l'image "TryScope"
     public Image hitScopeImage; // Référence à l'image "HitScope"
     public Animator ScopeZoom;
+    public Animator ScopeFade;
 
     void Start()
     {
@@ -34,11 +35,16 @@ public class ScopeImageController : MonoBehaviour
         ScopeZoom.Play("HitScopePop");
     }
 
+    public void PlayScopeFade()
+    {
+        ScopeFade.Play("TryScopeFade");
+    }
+
 
     IEnumerator HideScope(Image scopeImage)
     {
         // Attend 1 seconde puis désactive l'image
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1f);
         scopeImage.gameObject.SetActive(false);
     }
 

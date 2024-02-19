@@ -58,7 +58,6 @@ public class GunShoot : MonoBehaviour
     // Référence au Canvas contenant le script ScopeImageController
     public ScopeImageController ScopeImageController;
 
-
     private void Update()
     {
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
@@ -97,6 +96,8 @@ public class GunShoot : MonoBehaviour
             {
                 // Afficher "TryScope" si aucune cible n'est touchée
                 ScopeImageController.ShowTryScope();
+                ScopeImageController.PlayScopeFade();
+
 
             }
 
