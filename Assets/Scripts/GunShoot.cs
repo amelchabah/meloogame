@@ -65,28 +65,31 @@ public class GunShoot : MonoBehaviour
     }
 
     void Shoot()
+{
+    RaycastHit hit;
+    if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, range))
     {
-        RaycastHit hit;
-        if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, range))
+        // Debug.Log(hit.transform.name);
+
+        // Vérifie si l'objet touché a le composant TargetableObject
+        TargetableObject targetableObject = hit.collider.GetComponent<TargetableObject>();
+        if (targetableObject != null && targetableObject.isTargetable)
         {
-            // Debug.Log(hit.transform.name);
+            // Augmente le score si l'objet est ciblable
+            ScoreManager.Instance.AddScore();
+            Debug.Log("Score: " + ScoreManager.Instance.Score);
 
-            if (hit.rigidbody != null)
-            {
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
-                // Debug.Log("hit.rigidbody");
+            // Rend l'objet non ciblable après une touche
+            targetableObject.SetTargetable(false);
+        }
 
-
-                // Vérifie si l'objet touché a le tag "Target"
-                if (hit.collider.CompareTag("Target"))
-                {
-                    // Augmente le score du personnage uniquement pour les objets avec le tag "Target"
-                    ScoreManager.Instance.AddScore();
-
-                    // Debug le score du joueur
-                    Debug.Log("Score: " + ScoreManager.Instance.Score);
-                }
-            }
+        // Applique une force à l'objet touché
+        if (hit.rigidbody != null)
+        {
+            hit.rigidbody.AddForce(-hit.normal * impactForce);
+            // Debug.Log("hit.rigidbody");
         }
     }
+}
+
 }
