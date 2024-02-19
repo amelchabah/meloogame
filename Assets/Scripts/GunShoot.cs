@@ -56,7 +56,7 @@ public class GunShoot : MonoBehaviour
     private float nextTimeToFire = 0f;
 
     // Référence au Canvas contenant le script ScopeImageController
-    public ScopeImageController scopeImageController;
+    public ScopeImageController ScopeImageController;
 
 
     private void Update()
@@ -81,18 +81,22 @@ public class GunShoot : MonoBehaviour
             {
                 // Augmente le score si l'objet est ciblable
                 ScoreManager.Instance.AddScore();
-                // Afficher "TryScope" si aucune cible n'est touchée
-                scopeImageController.ShowHitScope();
-
                 Debug.Log("Score: " + ScoreManager.Instance.Score);
 
                 // Rend l'objet non ciblable après une touche
                 targetableObject.SetTargetable(false);
+
+                // Afficher "TryScope" si aucune cible n'est touchée
+                ScopeImageController.ShowHitScope();
+                ScopeImageController.PlayScopeZoom();
+
+
+
             }
             else
             {
                 // Afficher "TryScope" si aucune cible n'est touchée
-                scopeImageController.ShowTryScope();
+                ScopeImageController.ShowTryScope();
 
             }
 
