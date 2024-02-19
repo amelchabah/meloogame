@@ -8,15 +8,13 @@ public class FPSController : MonoBehaviour
 
 {
     public Camera playerCamera; // Référence à la caméra attachée au joueur
-    public float walkSpeed = 6f; // Vitesse de marche du joueur
-    public float runSpeed = 12f; // Vitesse de course du joueur
-    public float jumpPower = 7f; // Puissance de saut du joueur
+    public float walkSpeed = 5f; // Vitesse de marche du joueur
+    public float runSpeed = 10f; // Vitesse de course du joueur
+    public float crouchSpeed = 2f; // Vitesse de déplacement lorsque le joueur est accroupi
+    public float jumpPower = 4f; // Puissance de saut du joueur
     public float gravity = 10f; // Gravité appliquée au joueur
-
-
     public float lookSpeed = 2f; // Vitesse de rotation de la caméra
     public float lookXLimit = 45f; // Limite de rotation de la caméra sur l'axe X
-
 
     // Animation lorsque le joueur court (pour un effet plus réaliste)
     public float bobbingAmount = 0.03f; // Amplitude du balancement de la caméra
@@ -36,6 +34,16 @@ public class FPSController : MonoBehaviour
     CharacterController characterController; // Référence au composant CharacterController attaché à l'objet (du joueur)
     Vector3 initialPosition; // Stocke la position initiale du joueur
 
+    // Variable booléenne pour suivre si le joueur est accroupi
+    bool isCrouching = false;
+
+
+    // Variable pour stocker la taille du champ de vision (FOV) de la caméra en mode sniper
+    private float sniperFOV = 30f;
+
+    // Variable pour stocker la taille du champ de vision (FOV) de la caméra en mode normal
+    private float defaultFOV;
+
 
     void Start()
     {
@@ -47,7 +55,8 @@ public class FPSController : MonoBehaviour
         // Stocke la position initiale du joueur
         initialPosition = transform.position;
 
-
+        // Stocke le champ de vision (FOV) par défaut de la caméra
+        defaultFOV = playerCamera.fieldOfView;
     }
 
     void Update()
@@ -64,16 +73,19 @@ public class FPSController : MonoBehaviour
         float movementDirectionY = moveDirection.y; // Stocke la composante Y de la direction de déplacement actuelle
         moveDirection = (forward * curSpeedX) + (right * curSpeedY); // Calcule la nouvelle direction de déplacement totale
 
-
         // Modifie l'amplitude du balancement en fonction de la vitesse de déplacement
-        bobbingAmount = isRunning ? 0.1f : 0.03f; // Définit l'amplitude du balancement en fonction de si le joueur court ou marche
-
+        bobbingAmount = isRunning ? 0.1f : 0.03f; // Définit l'amplitude du balancement en fonction de si le joueur court ou marche ou est accroupi
+        if (isCrouching)
+        {
+            bobbingAmount = 0;
+        }
 
         #endregion
 
         // Handles Jumping : Gère le saut du joueur
         #region Handles Jumping
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded) // Si la touche de saut est enfoncée, que le joueur peut se déplacer et qu'il est au sol
+        if (Input.GetButton("Jump") && canMove && characterController.isGrounded && !isCrouching
+        ) // Si la touche de saut est enfoncée, que le joueur peut se déplacer et qu'il est au sol
         {
             moveDirection.y = jumpPower; // Applique la force de saut vers le haut
         }
@@ -121,11 +133,52 @@ public class FPSController : MonoBehaviour
         #endregion
 
 
+
+        #region Handles Crouching
+
+        if (Input.GetKeyDown(KeyCode.LeftControl)) // Si la touche Ctrl gauche est enfoncée
+        {
+            if (!isCrouching) // Si le joueur n'est pas déjà accroupi
+            {
+                isCrouching = true; // Le joueur est maintenant accroupi
+                characterController.height = 1f; // Réduit la hauteur du CharacterController
+                walkSpeed = crouchSpeed; // Réduit la vitesse de déplacement
+                runSpeed = crouchSpeed; // Réduit la vitesse de course
+                moveDirection.y = 0f; // Désactive le saut lorsque le joueur est accroupi
+            }
+            else // Si le joueur est déjà accroupi
+            {
+                isCrouching = false; // Le joueur n'est plus accroupi
+                characterController.height = 2; // Rétablit la hauteur du CharacterController
+                walkSpeed = 5f; // Rétablit la vitesse de déplacement
+                runSpeed = 10f; // Rétablit la vitesse de course
+            }
+            // Réinitialise le balancement de la caméra
+            bobbingTimer = 0;
+            bobbingAmountY = 0;
+        }
+
+        #endregion
+
+
+
         // Vérifie si le joueur est tombé en dessous d'une certaine hauteur
         if (transform.position.y < -10f)
         {
             Respawn();
         }
+
+
+        // Gérer l'effet de zoom pour le mode sniper
+        if (Input.GetMouseButton(1)) // Si le bouton droit de la souris est maintenu enfoncé
+        {
+            playerCamera.fieldOfView = sniperFOV; // Ajuste le champ de vision (FOV) pour le mode sniper
+        }
+        else // Si le bouton droit de la souris n'est pas enfoncé
+        {
+            playerCamera.fieldOfView = defaultFOV; // Rétablit le champ de vision (FOV) par défaut
+        }
+
 
     }
 
