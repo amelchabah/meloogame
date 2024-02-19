@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
@@ -40,9 +41,16 @@ public class FPSController : MonoBehaviour
 
     // Variable pour stocker la taille du champ de vision (FOV) de la caméra en mode sniper
     private float sniperFOV = 30f;
-
     // Variable pour stocker la taille du champ de vision (FOV) de la caméra en mode normal
-    private float defaultFOV;
+    private float defaultFOV = 60f;
+
+    private float targetFOV; // Champ de vision cible (sniperFOV ou defaultFOV)
+    private float currentFOV; // Champ de vision actuel de la caméra
+    public Image sniperOverlay; // Référence à l'Image de l'overlay du viseur de sniper
+
+
+    // Vitesse de transition entre les valeurs de FOV
+    public float zoomSpeed = 5f;
 
 
     void Start()
@@ -57,6 +65,12 @@ public class FPSController : MonoBehaviour
 
         // Stocke le champ de vision (FOV) par défaut de la caméra
         defaultFOV = playerCamera.fieldOfView;
+        // Initialisation de la valeur actuelle du champ de vision
+        currentFOV = playerCamera.fieldOfView;
+        // Désactiver l'overlay du viseur de sniper au démarrage
+        sniperOverlay.gameObject.SetActive(false);
+
+
     }
 
     void Update()
@@ -179,7 +193,15 @@ public class FPSController : MonoBehaviour
             playerCamera.fieldOfView = defaultFOV; // Rétablit le champ de vision (FOV) par défaut
         }
 
+        // Détermine la valeur cible du champ de vision en fonction de si le bouton droit de la souris est maintenu enfoncé ou non
+        targetFOV = Input.GetMouseButton(1) ? sniperFOV : defaultFOV;
 
+        // Ajuste progressivement le champ de vision actuel vers la valeur cible
+        currentFOV = Mathf.Lerp(currentFOV, targetFOV, Time.deltaTime * zoomSpeed);
+        playerCamera.fieldOfView = currentFOV; // Applique le champ de vision actuel à la caméra
+
+        // Activer ou désactiver l'overlay du viseur de sniper en fonction de l'état du mode sniperFOV
+        sniperOverlay.gameObject.SetActive(Input.GetMouseButton(1));
     }
 
     // Fonction pour respawn le joueur à sa position initiale
@@ -188,5 +210,7 @@ public class FPSController : MonoBehaviour
         // Réinitialise la position du joueur à la position initiale
         transform.position = initialPosition;
     }
+
+
 
 }
