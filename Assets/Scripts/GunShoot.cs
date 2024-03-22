@@ -1,69 +1,28 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-
-// public class GunShoot : MonoBehaviour
-// {
-//     public float damage = 10f;
-//     public float impactForce = 100f;
-//     public float range = 100f;
-//     public float fireRate = 15f; // 15 bullets per second
-//     public Camera FPSCam;
-//     private float nextTimeToFire = 0f;
-
-//     private void Update()
-//     {
-//         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
-//         {
-//             nextTimeToFire = Time.time + 1f / fireRate;
-//             Shoot();
-//         }
-//     }
-
-//     void Shoot()
-//     {
-//         RaycastHit hit;
-//         if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, range))
-//         {
-//             Debug.Log(hit.transform.name);
-
-//             if (hit.rigidbody != null)
-//             {
-//                 hit.rigidbody.AddForce(-hit.normal * impactForce);
-//                 Debug.Log("hit.rigidbody");
-//             }
-//         }
-//     }
-// }
-
-
-
-
-
-
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GunShoot : MonoBehaviour
 {
-    public float damage = 10f;
-    public float impactForce = 100f;
-    public float range = 100f;
-    public float fireRate = 15f; // 15 bullets per second
-    public Camera FPSCam;
+    // public float damage = 10f;
+    // public float impactForce = 100f;
+    // public float range = 100f;
+    // public float fireRate = 15f; // 15 bullets per second
+    // public Camera FPSCam;
 
+    [SerializeField] private float damage = 10f;
+    [SerializeField] private float impactForce = 100f;
+    [SerializeField] private float range = 100f;
+    [SerializeField] private float fireRate = 15f; // 15 bullets per second
+    [SerializeField] private Camera FPSCam;
+    [SerializeField] private ScopeImageController ScopeImageController;
 
     // public CrosshairController CrosshairController; // Référence au script CrosshairController
-
-
     private float nextTimeToFire = 1f;
-
     // Référence au Canvas contenant le script ScopeImageController
-    public ScopeImageController ScopeImageController;
+    // public ScopeImageController ScopeImageController;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
         {
@@ -119,3 +78,42 @@ public class GunShoot : MonoBehaviour
     }
 
 }
+
+
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+
+// public class GunShoot : MonoBehaviour
+// {
+//     public float damage = 10f;
+//     public float impactForce = 100f;
+//     public float range = 100f;
+//     public float fireRate = 15f; // 15 bullets per second
+//     public Camera FPSCam;
+//     private float nextTimeToFire = 0f;
+
+//     private void Update()
+//     {
+//         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+//         {
+//             nextTimeToFire = Time.time + 1f / fireRate;
+//             Shoot();
+//         }
+//     }
+
+//     void Shoot()
+//     {
+//         RaycastHit hit;
+//         if (Physics.Raycast(FPSCam.transform.position, FPSCam.transform.forward, out hit, range))
+//         {
+//             Debug.Log(hit.transform.name);
+
+//             if (hit.rigidbody != null)
+//             {
+//                 hit.rigidbody.AddForce(-hit.normal * impactForce);
+//                 Debug.Log("hit.rigidbody");
+//             }
+//         }
+//     }
+// }

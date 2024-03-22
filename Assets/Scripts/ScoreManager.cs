@@ -5,7 +5,6 @@ public class ScoreManager : MonoBehaviour
 {
     #region Singleton
     private static ScoreManager m_Instance;
-
     public static ScoreManager Instance
     {
         get
@@ -19,7 +18,6 @@ public class ScoreManager : MonoBehaviour
                     m_Instance = obj.AddComponent<ScoreManager>();
                 }
             }
-
             return m_Instance;
         }
     }
