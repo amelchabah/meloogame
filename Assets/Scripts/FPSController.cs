@@ -8,11 +8,11 @@ using UnityEngine.InputSystem;
 public class FPSController : MonoBehaviour
 // Définition de la classe FPSController qui hérite de MonoBehaviour, ce qui permet à ce script d'être attaché à un GameObject dans Unity.
 {
-    private PlayerInput playerInput;
+    public PlayerInput playerInput;
     public InputAction moveAction;
     public Camera playerCamera; // Référence à la caméra attachée au joueur
-    public float walkSpeed = 5f;
-    public float runSpeed = 10f;
+    public float walkSpeed = 2f;
+    public float runSpeed = 5f;
     public float crouchSpeed = 2f;
     public float jumpPower = 4f;
     public float gravity = 10f;
@@ -20,7 +20,7 @@ public class FPSController : MonoBehaviour
     public float lookXLimit = 45f;
 
     // Animation lorsque le joueur court (pour un effet plus réaliste)
-    public float bobbingAmount = 0.03f;
+    public float bobbingAmount = 0.01f;
     public float bobbingSpeed = 25f;
 
     Vector3 moveDirection = Vector3.zero; // Stocke la direction de déplacement du joueur
@@ -31,11 +31,11 @@ public class FPSController : MonoBehaviour
 
     public bool canMove = true;
     private bool isMoving = false;
+    private bool isCrouching = false; // Définir isCrouching comme un booléen
 
     CharacterController characterController; // Référence au composant CharacterController attaché à l'objet (du joueur)
     Vector3 initialPosition; // Stocke la position initiale du joueur
     // Variable booléenne pour suivre si le joueur est accroupi
-    bool isCrouching = false;
 
 
     // Variable pour stocker la taille du champ de vision (FOV) de la caméra en mode sniper
@@ -105,7 +105,7 @@ public class FPSController : MonoBehaviour
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
         // Modifiez l'amplitude du balancement en fonction de la vitesse de déplacement
-        bobbingAmount = isRunning ? 0.1f : 0.03f; // Définit l'amplitude du balancement en fonction de si le joueur court ou marche ou est accroupi
+        bobbingAmount = isRunning ? 0.05f : 0.01f; // Définit l'amplitude du balancement en fonction de si le joueur court ou marche ou est accroupi
 
         // Si le joueur est accroupi ou en mode sniper, désactivez le balancement
         if (isCrouching || isSniperMode)
@@ -116,7 +116,7 @@ public class FPSController : MonoBehaviour
 
     void HandleJumping()
     {
-        if (Input.GetButton("Jump") && canMove && characterController.isGrounded && !isCrouching)
+        if (canMove && characterController.isGrounded && !isCrouching && !isSniperMode && Input.GetButtonDown("Jump")) // Si le joueur est au sol et appuie sur la touche de saut
         {
             moveDirection.y = jumpPower; // Applique la force de saut vers le haut
         }
@@ -141,7 +141,6 @@ public class FPSController : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit); // Limite la rotation sur l'axe X
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0); // Applique la rotation à la caméra
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0); // Applique la rotation horizontale au joueur
-
             // Effet de balancement de la caméra
             if (characterController.velocity.magnitude > 0 && characterController.isGrounded) // Si le joueur est en mouvement et au sol
             {
@@ -162,28 +161,29 @@ public class FPSController : MonoBehaviour
 
     void HandleCrouching()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (playerInput.actions["Crouch"].triggered) // Si le joueur appuie sur la touche de contrôle
         {
-            if (!isCrouching) 
+            if (!isCrouching)
             {
-                isCrouching = true; 
+                isCrouching = true;
                 characterController.height = 1f; // Réduit la hauteur du CharacterController
-                walkSpeed = crouchSpeed; 
-                runSpeed = crouchSpeed; 
+                walkSpeed = crouchSpeed;
+                runSpeed = crouchSpeed;
                 moveDirection.y = 0f; // Désactive le saut lorsque le joueur est accroupi
             }
             else // Si le joueur est déjà accroupi
             {
-                isCrouching = false; 
+                isCrouching = false;
                 characterController.height = 2; // Rétablit la hauteur du CharacterController
-                walkSpeed = 5f; 
-                runSpeed = 10f; 
+                walkSpeed = 5f;
+                runSpeed = 10f;
             }
             // Réinitialise le balancement de la caméra
             bobbingTimer = 0;
             bobbingAmountY = 0;
         }
     }
+
 
     void HandleRespawn()
     {
