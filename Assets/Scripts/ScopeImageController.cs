@@ -4,29 +4,29 @@ using UnityEngine.UI;
 
 public class ScopeImageController : MonoBehaviour
 {
-    public Image tryScopeImage; // Référence à l'image "TryScope"
-    public Image hitScopeImage; // Référence à l'image "HitScope"
+    public Image TryScopeImage; // Référence à l'image "TryScope"
+    public Image HitScopeImage; // Référence à l'image "HitScope"
     public Animator ScopeZoom;
     public Animator ScopeFade;
 
     void Start()
     {
         // Assurez-vous que l'image "HitScope" est désactivée au démarrage
-        hitScopeImage.gameObject.SetActive(false);
+        HitScopeImage.gameObject.SetActive(false);
     }
 
     public void ShowTryScope()
     {
         // Affiche l'image "TryScope" pendant 1 seconde
-        tryScopeImage.gameObject.SetActive(true);
-        StartCoroutine(HideScope(tryScopeImage));
+        TryScopeImage.gameObject.SetActive(true);
+        StartCoroutine(HideScope(TryScopeImage));
     }
 
     public void ShowHitScope()
     {
         // Affiche l'image "HitScope" pendant 1 seconde
-        hitScopeImage.gameObject.SetActive(true);
-        StartCoroutine(HideScope(hitScopeImage));
+        HitScopeImage.gameObject.SetActive(true);
+        StartCoroutine(HideScope(HitScopeImage));
     }
 
     // Méthode pour déclencher l'animation "HitScopePop"
@@ -41,11 +41,11 @@ public class ScopeImageController : MonoBehaviour
     }
 
 
-    IEnumerator HideScope(Image scopeImage)
+    IEnumerator HideScope(Image ScopeImage)
     {
         // Attend 1 seconde puis désactive l'image
         yield return new WaitForSeconds(1f);
-        scopeImage.gameObject.SetActive(false);
+        ScopeImage.gameObject.SetActive(false);
     }
 
 }

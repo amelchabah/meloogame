@@ -8,7 +8,7 @@ public class ScoreDisplay : MonoBehaviour
 {
     private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject win;
-    [SerializeField] private float delayBeforeMainMenu = 2f; // Temps d'attente avant de charger la scène MainMenu
+    [SerializeField] private float delayBeforeMainMenu = 2f;
 
     private void Awake()
     {
@@ -21,7 +21,6 @@ public class ScoreDisplay : MonoBehaviour
 
     private void UpdateScore()
     {
-        // Vérifie si le scoreManager est toujours présent
         if (ScoreManager.Instance != null)
         {
             scoreText.text = "" + ScoreManager.Instance.Score;
