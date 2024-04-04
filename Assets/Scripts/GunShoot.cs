@@ -14,7 +14,7 @@ public class GunShoot : MonoBehaviour
     [SerializeField] private float fireRate = 15f;
     [SerializeField] private Camera FPSCam;
     [SerializeField] private ScopeImageController ScopeImageController;
-    private float nextTimeToFire = 1f;
+    [SerializeField] private float nextTimeToFire = 1f;
 
     void Start()
     {
