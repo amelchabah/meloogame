@@ -10,7 +10,7 @@
 //     // public float range = 100f;
 //     // public float fireRate = 15f; // 15 bullets per second
 //     // public Camera FPSCam;
-// public PlayerInput playerInput; // Ajoutez cette ligne
+//     [SerializeField] private PlayerInput playerInput; // Ajoutez cette ligne
 
 //     [SerializeField] private float damage = 10f;
 //     [SerializeField] private float impactForce = 100f;
@@ -33,21 +33,22 @@
 //     //     }
 //     // }
 
-// void Start()
-// {
+//     void Start()
+//     {
 //         playerInput = GetComponent<PlayerInput>(); // Décommentez cette ligne
-// }
+//     }
 
 //     void FixedUpdate()
-// {
-//     // Vérifie si le joueur appuie sur le bouton de tir, que le temps écoulé est supérieur ou égal au prochain temps de tir,
-//     // et que le joueur n'est pas en train de s'accroupir (en appuyant sur la touche de contrôle)
-//     if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire && !playerInput.actions["Crouch"].ReadValue<float>().Equals(1))
 //     {
-//         nextTimeToFire = Time.time + 1f / fireRate;
-//         Shoot();
+//         // Vérifie si le joueur appuie sur le bouton de tir, que le temps écoulé est supérieur ou égal au prochain temps de tir,
+//         // et que le joueur n'est pas en train de s'accroupir (en appuyant sur la touche de contrôle)
+//         // if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire && !playerInput.actions["Crouch"].ReadValue<float>().Equals(1))
+//         if (playerInput.actions["Fire"].ReadValue<float>().Equals(1) && Time.time >= nextTimeToFire && !playerInput.actions["Crouch"].ReadValue<float>().Equals(1))
+//         {
+//             nextTimeToFire = Time.time + 1f / fireRate;
+//             Shoot();
+//         }
 //     }
-// }
 
 
 //     void Shoot()
@@ -154,9 +155,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(CharacterController))]
+
 public class GunShoot : MonoBehaviour
 {
-    public PlayerInput playerInput;
+    [SerializeField] private PlayerInput playerInput;
+
     [SerializeField] private float damage = 10f;
     [SerializeField] private float impactForce = 100f;
     [SerializeField] private float range = 100f;
@@ -167,14 +171,12 @@ public class GunShoot : MonoBehaviour
 
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>(); // Assurez-vous que playerInput est initialisé
+        playerInput = GetComponent<PlayerInput>();
     }
 
     void FixedUpdate()
     {
-        // Vérifie si le joueur appuie sur le bouton de tir, que le temps écoulé est supérieur ou égal au prochain temps de tir,
-        // et que le joueur n'est pas en train de s'accroupir (en appuyant sur la touche de contrôle)
-        if (playerInput.actions["Fire"].triggered && Time.time >= nextTimeToFire)
+        if (playerInput.actions["Fire"].ReadValue<float>().Equals(1) && Time.time >= nextTimeToFire && !playerInput.actions["Crouch"].ReadValue<float>().Equals(1))
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             Shoot();
@@ -190,7 +192,7 @@ public class GunShoot : MonoBehaviour
             if (targetableObject != null && targetableObject.isTargetable)
             {
                 ScoreManager.Instance.AddScore();
-                Debug.Log("Score: " + ScoreManager.Instance.Score);
+                Debug.Log(ScoreManager.Instance.Score);
                 targetableObject.SetTargetable(false);
                 ScopeImageController.ShowHitScope();
                 ScopeImageController.PlayScopeZoom();
