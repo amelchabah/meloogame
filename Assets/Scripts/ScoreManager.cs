@@ -36,15 +36,19 @@ public class ScoreManager : MonoBehaviour
     }
     #endregion
 
-    public static readonly int MAXIMUM_SCORE = 4;
-
     public event Action OnAddScore;
 
     public int Score { get; private set; }
 
+    public void ResetScore()
+    {
+        Score = 0;
+    }
     public void AddScore()
     {
         Score++;
         OnAddScore?.Invoke();
     }
+
+
 }

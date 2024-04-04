@@ -45,6 +45,7 @@ public class FPSController : MonoBehaviour
 
     public float zoomSpeed = 5f;
     private bool isSniperMode = false;
+    
 
 
     void Start()
