@@ -27,11 +27,11 @@ public class ScoreManager : MonoBehaviour
         if (m_Instance == null)
         {
             m_Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
+            // DontDestroyOnLoad(gameObject);
+        // }
+        // else
+        // {
+            // Destroy(gameObject);
         }
     }
     #endregion
