@@ -25,15 +25,13 @@ public class ScoreDisplay : MonoBehaviour
         if (ScoreManager.Instance != null)
         {
             scoreText.text = "" + ScoreManager.Instance.Score;
-            if (ScoreManager.Instance.Score == 3)
+            if (ScoreManager.Instance.Score == 4)
             {
                 win.SetActive(true);
                 StartCoroutine(WaitAndLoadMainMenu());
-
             }
         }
     }
-
 
     IEnumerator WaitAndLoadMainMenu()
     {
